@@ -70,12 +70,9 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
 
         $os = php_uname('s');
         if(preg_match('/Windows/i', $os)){
-            $homedir = str_replace("\\", "\\\\", $homedir);
-            $regexp = '/Real command: cmd.exe \/C "cd ' . $homedir . ' & echo helloworld"/';
+            $regexp = '/Real command: cmd.exe \/C "cd ' . preg_quote($homedir, '/') . ' & echo helloworld"/';
         }else {
-            $regexp = '/Real command: \/bin\/bash -l -c "cd ' . $homedir . ' && echo helloworld"/';
-
-echo $regexp;
+            $regexp = '/Real command: \/bin\/bash -l -c "cd ' . preg_quote($homedir, '/') . ' && echo helloworld"/';
         }
         $this->assertRegExp($regexp, $output);
     }
@@ -110,10 +107,7 @@ echo $regexp;
     {
         // environment-dependent
         $srcPath = __DIR__ . "/ProcessTest/gettest.txt";
-
-        echo realpath(__DIR__);
-
-        $destPath = realpath(__DIR__."/../../../../tmp/Altax/Module/Task/Process/ProcessTest") . DIRECTORY_SEPARATOR . "gettest.txt";
+        $destPath = realpath(__DIR__."/../../../../tmp/Altax/Module/Task/Process/ProcessTest/") . DIRECTORY_SEPARATOR . "gettest.txt";
         @unlink($destPath);
 
         $this->runtimeTask->getOutput()->setVerbosity(3);
@@ -153,7 +147,7 @@ echo $regexp;
         // environment-dependent
         $srcPath = __DIR__."/ProcessTest/gettest.txt";
 
-        $destPath = realpath(__DIR__."/../../../../tmp/Altax/Module/Task/Process/ProcessTest") . DIRECTORY_SEPARATOR . "gettest.txt";
+        $destPath = realpath(__DIR__."/../../../../tmp/Altax/Module/Task/Process/ProcessTest/") . DIRECTORY_SEPARATOR . "gettest.txt";
 
         @unlink($destPath);
 
