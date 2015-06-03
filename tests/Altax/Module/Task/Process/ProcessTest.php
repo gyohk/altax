@@ -74,6 +74,8 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
             $regexp = '/Real command: cmd.exe \/C "cd ' . $homedir . ' & echo helloworld"/';
         }else {
             $regexp = '/Real command: \/bin\/bash -l -c "cd ' . $homedir . ' && echo helloworld"/';
+
+echo $regexp;
         }
         $this->assertRegExp($regexp, $output);
     }
@@ -108,6 +110,8 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     {
         // environment-dependent
         $srcPath = __DIR__ . "/ProcessTest/gettest.txt";
+
+        echo realpath(__DIR__);
 
         $destPath = realpath(__DIR__."/../../../../tmp/Altax/Module/Task/Process/ProcessTest") . DIRECTORY_SEPARATOR . "gettest.txt";
         @unlink($destPath);
